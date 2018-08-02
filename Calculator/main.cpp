@@ -13,9 +13,10 @@ int main(int argc, char *argv[])
     QScopedPointer <Calculator> calc(new Calculator);
 
     QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("calc",calc.data());
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
-    engine.rootContext()->setContextProperty("calc",calc.data());
+
     return app.exec();
 }

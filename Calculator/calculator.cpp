@@ -1,8 +1,12 @@
 #include "calculator.h"
 
-Calculator::Calculator(QObject *parent) : QObject(parent)
+Calculator::Calculator(QObject *parent) : QObject(parent), m_myModel(new JournalModel())
 {
+}
 
+Calculator::~Calculator()
+{
+    delete m_myModel;
 }
 
 void Calculator::addNumber(QString numb)
@@ -43,7 +47,7 @@ QString Calculator::getAnswer()
     for(float n:numbers) qDebug()<<n;
     qDebug()<<"actions:";
     for(QString s:actions) qDebug()<<s;
-    QString sign,answer = "Answer: ";
+    QString sign,answer = "";
     for(int i=1; i<numbers.size();++i){
         first = temp;
         second = numbers[i];
@@ -132,6 +136,21 @@ void Calculator::sortVectors()//do not ask me how it works
 void Calculator::del()
 {
     qDebug()<<"Deleted";
+}
+
+void Calculator::item1FinishEvent()
+{
+    emit signalEvent1();
+}
+
+void Calculator::item2FinishEvent()
+{
+    emit signalEvent2();
+}
+
+void Calculator::item3FinishEvent()
+{
+    emit signalEvent3();
 }
 
 
